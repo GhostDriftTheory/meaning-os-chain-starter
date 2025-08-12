@@ -1,0 +1,13 @@
+{
+  "name": "meaning-os-chain-cli",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "type": "commonjs",
+  "scripts": {
+    "cli": "node cli/cli.js"
+  },
+  "dependencies": {
+    "ethers": "^5.7.2"
+  }
+}
