@@ -1,44 +1,29 @@
-# Meaning OS × Blockchain — A-grade Starter
+# Meaning OS × Blockchain — Implementation Example A
 
-[![CI](https://github.com/<OWNER>/<REPO>/actions/workflows/test.yml/badge.svg)](https://github.com/<OWNER>/<REPO>/actions/workflows/test.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+This project represents **an implementation example of the OS Control Unit**  
+described in the patent application *"Non-Continuous Jump Control Type Meaning Generation OS"*.
 
-**What you get**
-- SHPRegistry（Commit→Reveal→OCW→Finalize→JumpLog）
-- MinorityGuard712（EIP-712マルチシグでΓ-floor／OCW延長）
-- 最小CLI（commit / reveal / sign-gamma / post-gamma / finalize）
-- Foundryテスト（不変量＆ファズ）
+In this implementation:
+- The **Emotion Resonance Function** (broadly defined evaluation function)  
+  and **Meaning Energy Function** are computed off-chain to generate  
+  `Δφ` (state improvement measure) and jump direction `g`.
+- These results are irreversibly recorded via a **Commit–Reveal structure**.
+- Only when the **Non-Continuous Jump Condition** is satisfied  
+  (`Δφ < 0` and no challenges during the OCW period) is the reference point updated  
+  on-chain and the jump finalized.
+- The **Γ-floor mechanism** allows **extension of the OCW period** based on  
+  minority approval, ensuring sufficient time before reference point updates.
 
-## Quick Start
-```bash
-# Hardhat（任意）でコンパイル
-npm i -D hardhat @nomicfoundation/hardhat-toolbox && npx hardhat compile
+Through this approach, we realize the **OS Control Unit** described in Claims 1–4  
+of the patent in a decentralized ledger environment, enabling socially verifiable control.
 
-# guardian付きデプロイ例
-node scripts/deploy_with_guardian_712.js   # Hardhat環境なら
 
-# CLI
-npm i
-# 1) 準備
-node cli/cli.js prepare --id case1 --s "S*" --g "g^" --dphi -1 --ocw 3600
-# 2) commit / 3) reveal
-node cli/cli.js commit --id case1
-node cli/cli.js reveal --id case1
-# 4) 署名者2名でEIP-712署名（鍵を切替えて実行）
-node cli/cli.js sign-gamma --id case1 --mass 7 --nonce 1
-# 5) Γ投稿（署名2つを渡す）
-node cli/cli.js post-gamma --id case1 --mass 7 --nonce 1 --sigs 0xSigA,0xSigB
-# 6) 締切チェック→期限後に finalize
-node cli/cli.js deadline --id case1
-node cli/cli.js finalize --id case1
+## Feature–Patent Element Mapping
 
-## Security Model（要点）
-- φ/g の評価は **オフチェーン**。オンチェーンは **手続と証跡** を保証（Commit–Reveal、不可逆JumpLog、OCW、Γ-floor）。
-- `finalize` は **「無チャレンジ ∧ Δφ < 0」** のときだけ accepted。履歴はイベントで改変不可能。
-- Γ-floor は **EIP-712 署名の閾値承認（θ）** で OCW を延長。**`nonce`** でリプレイ防止。
-
-## Roadmap
-- SNARK/STARK による `proof` のオンチェーン検証（現状はハッシュ/URIアンカー）。
-- 最小Web UI（1画面：commit / reveal / Γ署名収集 / postGamma / finalize）。
-- 署名の重み付きマルチシグ、または DAO ガバナンス接続（θや延長秒のオンチェーン投票）。
+- **Emotion Resonance Function E(s)** — Broadly defined evaluation value (`Δφ`)  
+  computed externally and recorded via commit/reveal
+- **Meaning Energy Function Φ(s)** — Semantic energy evaluation of state vector `s` (off-chain)
+- **Non-Continuous Jump Condition** — `Δφ < 0` + no challenges → finalize
+- **Reference Point Update ψ_ref** — Performed at finalize
+- **OS Control Unit** — The complete process of commit / reveal / finalize / Γ-floor / OCW extension
 
